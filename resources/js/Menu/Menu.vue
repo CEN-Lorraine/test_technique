@@ -3,7 +3,7 @@
 		<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <Link class="navbar-brand" :href="route('home')">
-                    {{app_name}}
+                    {{ app_name }}
                 </Link>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false">
                     <span class="navbar-toggler-icon"></span>
@@ -33,17 +33,16 @@
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{auth_user.name}}
+                                {{ auth_user.name }}
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <Link class="dropdown-item" :href="route('profile.edit')">
+                                    Modifier le profil
+                                </Link>
                                 <a class="dropdown-item" href="#" @click="logout()">
-                                   	Déconnexion
+                                    Déconnexion
                                 </a>
-
-<!--                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form> -->
                             </div>
                         </li>
                     </ul>
@@ -65,8 +64,7 @@ const auth_user = page.props.auth_user;
 
 const current_route = route().current() ? ref(route().current()) : ref('home');
 
-const checkCurrentRoute = (routes_names) =>
-{
+const checkCurrentRoute = (routes_names) => {
     let route_type = ['index', 'create', 'edit'];
     let resp = '';
 
@@ -81,8 +79,7 @@ const checkCurrentRoute = (routes_names) =>
     return resp;
 }
 
-const logout = () =>
-{
+const logout = () => {
 	axios.post(base_url+'/logout')
 	.then(response => response.data)
 	.then(data => {
@@ -94,11 +91,9 @@ const logout = () =>
 }
 
 /*
- * Watch 
+ * Watch
  */
 router.on('finish', (event) => {
     current_route.value = route().current();
 })
-
-
 </script>

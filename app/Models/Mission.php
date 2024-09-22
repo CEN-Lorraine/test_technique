@@ -12,4 +12,15 @@ class Mission extends Model
     protected $table = 'missions';
     protected $primaryKey = 'id';
     protected $fillable = ['nom', 'nom_interne'];
+
+    // Méthode permettant (normalement) d'accéder aux missions associées à un projet
+    public function missions()
+    {
+        return $this->belongsToMany(Mission::class, 'mission_projet', 'projet_id', 'mission_id');
+    }
+
+    protected $casts = [
+        'debut' => 'date',
+        'fin' => 'date',
+    ];
 }

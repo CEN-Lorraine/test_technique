@@ -25,7 +25,7 @@ class MissionController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Mission/MissionCreate');
     }
 
     /**
@@ -33,7 +33,13 @@ class MissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'nom' => 'required|string|max:100|unique:missions,nom',
+        ]);
+
+        Mission::create($request->all());
+
+        return redirect()->route('missions.index')->with('message', "La mission a bien été créée.");
     }
 
     /**
@@ -41,7 +47,13 @@ class MissionController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $mission = Mission::find($id);
+
+        if($mission){
+            return Inertia::render('Mission/MissionShow', compact('mission'));
+        }
+
+        return back()->withErrors("La mission n'a pas pu être trouvée.");
     }
 
     /**
@@ -82,8 +94,7 @@ class MissionController extends Controller
      */
     public function destroy(string $id)
     {
-        $id_test = 58;
-        $mission = Mission::find($id_test);
+        $mission = Mission::find($id);
 
         if($mission){
             $mission->delete();
