@@ -8,6 +8,13 @@
 			</div>
 
 			<div class="card-body py-3">
+				<!-- Bouton pour créer une nouvelle mission (en théorie :D) -->
+				<div class="mb-3">
+					<Link :href="route('missions.create')" class="btn btn-success">
+						Créer une nouvelle mission
+					</Link>
+				</div>
+
 				<div class="table-responsive">
 					<table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
 						<thead>
@@ -18,9 +25,9 @@
 						</thead>
 
 						<tbody>
-							<tr v-for="mission in props.missions">
+							<tr v-for="mission in props.missions" :key="mission.id">
 								<td>
-									{{mission.nom}}
+									{{ mission.nom }}
 								</td>
 								<td>
 									<div class="d-flex justify-content-end flex-shrink-0">
@@ -29,39 +36,28 @@
 												<i class="fa-solid fa-pencil"></i>
 											</span>
 										</Link>
-<!-- 
-										<button class="btn-danger btn btn-icon btn-bg-light btn-active-color-white btn-sm me-1" @click="deleteElement(mission)">
-											<i class="fas fa-trash-alt"></i>
-										</button> -->
 
 										<delete-parametre-data
 	                                        :id="mission.id"
 	                                        :url="'missions.destroy'"
 	                                        :propertie_name="'missions'"
-	                                        :confirmTextHeader = "'Supprimer cette mission ?'"
-	                                        :confirmTextBody = "'Voulez-vous vraiment supprimer cette mission ?'"
-	                                        >
+	                                        :confirmTextHeader="'Supprimer cette mission ?'"
+	                                        :confirmTextBody="'Voulez-vous vraiment supprimer cette mission ?'"
+	                                    >
 	                                    </delete-parametre-data>
 									</div>
 								</td>
 							</tr>
 						</tbody>
 					</table>
-
 				</div>
 			</div>
 		</div>
-		
 	</div>
 </template>
 
 <script setup>
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 
 const props = defineProps(['missions']);
-
-const deleteElement = (mission) =>
-{
-	console.log(mission)
-}
 </script>
